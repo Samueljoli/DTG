@@ -11,6 +11,8 @@ class CreateEvents < ActiveRecord::Migration
       t.string :url
       t.string :image
       t.string :category
+			t.date :date
+			t.time :time
 
       t.timestamps null: false
     end
