@@ -61,5 +61,6 @@ group :production do
 end
 
 gem 'bootstrap-sass', '~> 3.1.1'
+gem "devise"
 gem 'omniauth'
 gem 'omniauth-facebook', '1.4.0'
