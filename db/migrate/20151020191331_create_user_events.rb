@@ -3,7 +3,7 @@ class CreateUserEvents < ActiveRecord::Migration
     create_table :user_events do |t|
       t.belongs_to :user, index: true
       t.belongs_to :event, index: true
-      t.integer :shown_userr_id
+      t.integer :shown_user_id
       t.string :liked
 
       t.timestamps null: false

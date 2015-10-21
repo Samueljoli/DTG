@@ -5,7 +5,7 @@ class CreateEvents < ActiveRecord::Migration
       t.string :venue
       t.integer :street_number
       t.string :city
-      t.string :sttate
+      t.string :state
       t.integer :zip
       t.text :description
       t.string :url
