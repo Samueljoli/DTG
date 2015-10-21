@@ -9,6 +9,8 @@ class CreateEvents < ActiveRecord::Migration
       t.string :state
       t.integer :zip
       t.text :description
+			t.string :cost
+			t.string :tickets
       t.string :url
       t.string :image
       t.string :category
