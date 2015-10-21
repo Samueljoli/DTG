@@ -61,6 +61,11 @@ group :production do
 end
 
 gem 'bootstrap-sass', '~> 3.1.1'
+
+#creates a seed file
+gem 'seed_dump'
+#facebook login
 gem "devise"
+gem 'therubyracer'
 gem 'omniauth'
-gem 'omniauth-facebook', '1.4.0'
+gem 'omniauth-facebook'
