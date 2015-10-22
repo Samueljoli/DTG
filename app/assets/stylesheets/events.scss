@@ -4,17 +4,19 @@
 
 
 .homepage-event-image { 
-	object-fit: contain;
-	width: 250px;
-	height: 250px
+	padding: 20px;
 	}
 
-.homepage-events-table {
-	table-layout: fixed;
-	word-wrap: break-word;
+.event-link {
+	display: block;
+	height: 300px;
+	width: 100%;
 }
 
 .somelogo {
 	padding: 0;
 	margin: 0;
+}
+
+.one-event-image {
 }
