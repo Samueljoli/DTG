@@ -10,11 +10,13 @@ class User < ActiveRecord::Base
         user.provider = auth.provider
         user.uid = auth.uid
 				user.name = auth.info.name
+				user.gender = auth.extra.raw_info.gender
+				user.cover = auth.extra.raw_info.cover.source
         user.email = auth.info.email
 				user.image = auth.info.image
         user.password = Devise.friendly_token[0,20]
       end
-  end
+	end
 
 has_many :user_events
 has_many :events, through: :user_events

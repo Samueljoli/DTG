@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration
 			t.integer :age			
 			t.string :gender
 			t.string :image
+			t.string :cover
 
       t.timestamps null: false
     end
