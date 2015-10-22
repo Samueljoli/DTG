@@ -1,7 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <div id="userimage">
-	<img src="<%= @user.image + "?type=large" %>">
+	<% if @user.real %>
+		<%= image_tag(@user.image + "?type=large") %>
+	<% else %>
+	<%= image_tag(@user.image[67..-1])%>
+<% end %>
 </div>
 
 <p>

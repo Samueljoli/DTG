@@ -61,6 +61,9 @@ end
 
 gem 'bootstrap-sass', '~> 3.1.1'
 
+
+#Faker creates fake data
+gem 'factory-helper', '~> 1.7'
 #creates a seed file
 gem 'seed_dump'
 #facebook login
