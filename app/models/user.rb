@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
 				user.cover = auth.extra.raw_info.cover.source
         user.email = auth.info.email
 				user.image = auth.info.image
+				user.real = true 
         user.password = Devise.friendly_token[0,20]
       end
 	end
