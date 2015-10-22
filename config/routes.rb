@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   resources :users
   
   get '/users/:id/events' => 'users#my_events'  
+  get '/events/:id/pin_event' => 'events#pin_event'
+  get '/events/:id/unpin_event' => 'events#unpin_event'
+  get "/events/:event_id/users/:user_id/tinder" => 'users#tinder'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

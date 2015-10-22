@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :pin_event, :unpin_event]
 
   # GET /events
   # GET /events.json
@@ -60,6 +60,19 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def pin_event
+    event = Event.find_by_id(params["id"]) 
+    current_user.events << event unless current_user.events.find_by_id(event.id)
+    redirect_to "/events"
+  end
+
+  def unpin_event
+    event = Event.find_by_id(params["id"]) 
+    current_user.events.delete(event)
+    redirect_to "/users/#{current_user.id}"
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

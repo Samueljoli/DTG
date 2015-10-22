@@ -64,6 +64,11 @@ class UsersController < ApplicationController
   def my_events
   end
 
+  def tinder
+    UserEvent.select{|e| e.user_id == current_user.id && e.event_id == params["event_id"].to_i }.select{|e| e.shown_user_id == nil}.first.update(shown_user_id: params["user_id"].to_i, liked: "yes")
+    redirect_to "/events/#{params["event_id"]}"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

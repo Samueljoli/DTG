@@ -4,6 +4,7 @@
       <div class="col-md-6">
           <!-- iterate over each event, adding image to page that links to its page -->
           <%= link_to image_tag(event.image[8..-1], :class => "homepage-event-image"), event %>
+          <%= link_to 'Remove Event', "/events/#{event.id}/unpin_event" %>
           
           <!-- <div class="homepage-event-box"> -->
             <!-- <img class="homepage-event-image" src="<%=event.image%>"> -->
