@@ -17,12 +17,13 @@ class EventsController < ApplicationController
 
     my_matched_folk = %Q(
     SELECT * FROM users WHERE users.id NOT IN 
-    (SELECT user_events.user_id FROM user_events INNER JOIN user_events AS also_likes_me
+    (SELECT also_likes_me.user_id FROM user_events INNER JOIN user_events AS also_likes_me
       ON user_events.user_id = also_likes_me.shown_user_id
       AND also_likes_me.liked = 'yes' AND also_likes_me.event_id = #{@event.id}
       WHERE user_events.user_id = #{current_user.id} AND user_events.liked = 'yes' AND user_events.event_id = #{@event.id}) AND users.gender != "#{current_user.gender}" AND users.id IN (SELECT user_events.user_id FROM user_events 
       WHERE user_events.event_id = #{@event.id})
     )
+
     @tinder = User.find_by_sql(my_matched_folk)
 
 

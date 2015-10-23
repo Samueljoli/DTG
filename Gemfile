@@ -67,6 +67,7 @@ gem 'factory-helper', '~> 1.7'
 #creates a seed file
 gem 'seed_dump'
 #facebook login
+gem 'rails_db'
 gem "devise"
 gem 'therubyracer'
 gem 'omniauth'
