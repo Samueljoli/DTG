@@ -24,7 +24,17 @@ class EventsController < ApplicationController
       WHERE user_events.event_id = #{@event.id})
     )
 
-    @tinder = User.find_by_sql(my_matched_folk)
+    folk_i_liked = %Q(
+      SELECT * FROM users WHERE users.id NOT IN
+      (SELECT user_events.shown_user_id FROM user_events 
+        WHERE user_events.user_id = #{current_user.id} AND liked != 'nil' AND user_events.event_id = #{@event.id})
+      AND users.id IN (SELECT users.id FROM users WHERE users.gender != "#{current_user.gender}") AND users.id IN (SELECT user_events.user_id FROM user_events 
+      WHERE user_events.event_id = #{@event.id})
+
+      )
+    likes_and_dislikes = User.find_by_sql(folk_i_liked)
+    @matches = User.find_by_sql(my_matched_folk)
+    @tinder = likes_and_dislikes
 
 
 
