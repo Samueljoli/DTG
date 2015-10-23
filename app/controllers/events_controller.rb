@@ -11,11 +11,11 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
 
-    # @matches = UserEvent.select { |u_e| u_e.event_id == @event.id && ((u_e.shown_user_id == current_user.id && u_e.liked == 'yes') ||
-    #  (u_e.shown_user_id != current_user.id))} 
-    # @tinder = @matches.select { |user_event| User.find(user_event.user_id).gender != current_user.gender }
 
-    my_matched_folk = %Q(
+  # this is a sequel query which will eliminate the users who have liked you, and you have also liked.
+  # it will then filter out the same gender as you (should be change dto reflect your sexual preference)
+  # and will only find the users who have pinned this event.
+  my_matched_folk = %Q(
     SELECT * FROM users WHERE users.id NOT IN 
     (SELECT also_likes_me.user_id FROM user_events INNER JOIN user_events AS also_likes_me
       ON user_events.user_id = also_likes_me.shown_user_id
@@ -23,20 +23,21 @@ class EventsController < ApplicationController
       WHERE user_events.user_id = #{current_user.id} AND user_events.liked = 'yes' AND user_events.event_id = #{@event.id}) AND users.gender != "#{current_user.gender}" AND users.id IN (SELECT user_events.user_id FROM user_events 
       WHERE user_events.event_id = #{@event.id})
     )
-
-    folk_i_liked = %Q(
-      SELECT * FROM users WHERE users.id NOT IN
-      (SELECT user_events.shown_user_id FROM user_events 
-        WHERE user_events.user_id = #{current_user.id} AND liked != 'nil' AND user_events.event_id = #{@event.id})
+  
+  # this query will filter out any user you have liked or disliked, and is opposite gender and pinned this event.
+  folk_i_liked = %Q(
+    SELECT * FROM users WHERE users.id NOT IN
+    (SELECT user_events.shown_user_id FROM user_events 
+      WHERE user_events.user_id = #{current_user.id} AND liked != 'nil' AND user_events.event_id = #{@event.id})
       AND users.id IN (SELECT users.id FROM users WHERE users.gender != "#{current_user.gender}") AND users.id IN (SELECT user_events.user_id FROM user_events 
       WHERE user_events.event_id = #{@event.id})
+    )
+  
+  # this will run the query to filter out likes and dislikes and pass it to the show page as @tinder
+  @tinder = User.find_by_sql(folk_i_liked)
 
-      )
-    likes_and_dislikes = User.find_by_sql(folk_i_liked)
-    @matches = User.find_by_sql(my_matched_folk)
-    @tinder = likes_and_dislikes
-
-
+  # this will run the query to find your matches
+  @matches = User.find_by_sql(my_matched_folk)
 
   end
 
@@ -90,12 +91,19 @@ class EventsController < ApplicationController
   end
 
   def pin_event
+    # when a user clicks the pin event button, this will find that event, (the id is passed in the route)
+    # and will add them to the users list of events/user_events table, unless that user has already pinned the event
+    # it redirects back to the events page
     event = Event.find_by_id(params["id"]) 
     current_user.events << event unless current_user.events.find_by_id(event.id)
     redirect_to "/events"
   end
 
+
+
   def unpin_event
+
+    # this will remove the event from the users list of events and redirect to the users page.
     event = Event.find_by_id(params["id"]) 
     current_user.events.delete(event)
     redirect_to "/users/#{current_user.id}"

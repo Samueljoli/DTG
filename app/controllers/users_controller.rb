@@ -62,9 +62,11 @@ class UsersController < ApplicationController
   end
 
   def my_events
+    # lists the events the user has pinned.
   end
 
   def tinder
+    # when a user 'swipes right', this will add a new row to the user_events table with the info. and redirect to the event they came from
     UserEvent.create( user_id: current_user.id, event_id: params["event_id"].to_i, shown_user_id: params["user_id"].to_i, liked: 'yes')
     redirect_to "/events/#{params["event_id"].to_i}"
   end
