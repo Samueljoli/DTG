@@ -64,7 +64,6 @@
   <%= @event.category %>
 </p>
 
-<%binding.pry%>
 <% @tinder.each do |user| %>
   <% user = User.find(user.id) %>
   <% if user.real %>
