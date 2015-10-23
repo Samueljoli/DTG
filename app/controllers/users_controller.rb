@@ -65,8 +65,9 @@ class UsersController < ApplicationController
   end
 
   def tinder
-    UserEvent.select{|e| e.user_id == current_user.id && e.event_id == params["event_id"].to_i }.select{|e| e.shown_user_id == nil}.first.update(shown_user_id: params["user_id"].to_i, liked: "yes")
-    redirect_to "/events/#{params["event_id"]}"
+    binding.pry
+    UserEvent.create( user_id: current_user.id, event_id: params["event_id"].to_i, shown_user_id: params["user_id"].to_i, liked: 'yes')
+    redirect_to "/events/#{params["event_id"].to_i}"
   end
 
   private

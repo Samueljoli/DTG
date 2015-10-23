@@ -15,15 +15,16 @@ class EventsController < ApplicationController
     #  (u_e.shown_user_id != current_user.id))} 
     # @tinder = @matches.select { |user_event| User.find(user_event.user_id).gender != current_user.gender }
 
-
-    this_events_user_events = @event.user_events
     my_matched_folk = %Q(
-    SELECT user_events.shown_user_id FROM user_events INNER JOIN user_events AS also_likes_me
+    SELECT * FROM users WHERE users.gender != "#{current_user.gender}" AND users.id NOT IN 
+    (SELECT user_events.user_id FROM user_events INNER JOIN user_events AS also_likes_me
       ON user_events.user_id = also_likes_me.shown_user_id
-      AND also_likes_me.liked = 'yes' AND also_likes_me.event_id = 2
-      WHERE user_events.user_id = 19 AND user_events.liked = 'yes' AND user_events.event_id = 2
+      AND also_likes_me.liked = 'yes' AND also_likes_me.event_id = 1
+      WHERE user_events.user_id = 21 AND user_events.liked = 'yes' AND user_events.event_id = 1)
     )
-    @tinder = UserEvent.find_by_sql(my_matched_folk)
+    @tinder = User.find_by_sql(my_matched_folk).reject{|e| !e.events.include?(@event)}
+    binding.pry
+
 
 
 
