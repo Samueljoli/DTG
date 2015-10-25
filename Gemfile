@@ -60,6 +60,9 @@ group :production do
 end
 
 gem 'bootstrap-sass', '~> 3.1.1'
+gem 'autoprefixer-rails'
+gem 'prefixfree-rails', '~> 0.0.1'
+
 
 #creates a seed file
 gem 'seed_dump'

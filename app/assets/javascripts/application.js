@@ -13,5 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require prefixfree-rails/prefixfree
 //= require_tree ../../../vendor/assets/javascripts/.
 //= require_tree .
