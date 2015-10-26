@@ -1,12 +1,13 @@
 <html>
-<head>
-  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css'>
+  <head>
+    <!-- Icons & Fonts -->
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css'>
 
     <style>
 
-        * {
-  transition: all 500ms ease-out;
-  -webkit-transition: all 500ms ease-out;
+    * {
+    transition: all 500ms ease-out;
+    -webkit-transition: all 500ms ease-out;
 }
 
 html, body, section, .page {
@@ -30,13 +31,13 @@ section {
   position: absolute;
 }
 
-#inside {
-  width: 85%;
-  height: 150%;
-  margin-left: 2.5%;
-  margin-top: 20px;
-  background-color: deeppink;
-}
+
+/* 
+> Position and background color of individual pages
+> p1 = Home
+> p2 = Events
+> p3 = Messages
+*/
 
 #p1 {
   left: 0;
@@ -44,7 +45,7 @@ section {
 
 #p2 {
   left: 100%;
-  background: #ffd006;
+  background: white;
 }
 
 #p3 {
@@ -67,12 +68,13 @@ ul {
     transform: translateX(-190%);
 }
 
-/*This allows the function of having the black background during transitions from page2page*/
+/* Background color during page transitions */
 #t2:target .page#p1, 
 #t3:target .page#p1 {
   background: black;
 }
 
+/* Screen blur during page transitions */
 #t2:target .page#p1 .icon, 
 #t3:target .page#p1 .icon {
   -webkit-filter: blur(3px);
@@ -89,16 +91,19 @@ ul .icon:hover {
   opacity: 0.6;
 }
 
+/* Don't worry about this, will delete later */
 #p1 .icon .title {
   margin-bottom: 20px;
 }
 
+/* Icons enlarge on hover */
 #t2:target ul .icon,
 #t3:target ul .icon {
   transform: scale(.6); 
   transition-delay: .25s;
 }
 
+/* Icons enlarge depending on what page your on */
 #t2:target #dos {
   transform: scale(1.2) !important;
 }
@@ -222,48 +227,52 @@ a {
 <body>
 
   <div class="ct" id="t1">
- <div class="ct" id="t2">
-   <div class="ct" id="t3">
-     <div class="ct" id="t4">
+    <div class="ct" id="t2">
+      <div class="ct" id="t3">
+        <div class="ct" id="t4">
 
 
-<section>  
- <ul>
-   <a href="#t1"><li class="icon fa fa-home" id="uno"><span class="hint"> Home </span></li></a>
-   <a href="#t2"><li class="icon fa fa-thumb-tack" id="dos"><span class="hint"> Events </span></li></a>
-   <a href="#t3"><li class="icon fa fa-comments" id="tres"><span class="hint"> Messages </span></li></a>
- </ul>
-  <div class="page" id="p1">
-     <li class="icon fa fa-home"><span class="title">Home<span class="hint" style="color:red;"> You haven't selected any events</span></span></li>   
-  </div>
+          <section>  
+             <!-- Left navigaiton bar. Icons that use anchors to pull in page into view (#t2 = Events page) -->
+             <ul>
+               <a href="#t1"><li class="icon fa fa-home" id="uno"><span class="hint"> Home </span></li></a>
+               <a href="#t2"><li class="icon fa fa-thumb-tack" id="dos"><span class="hint"> Events </span></li></a>
+               <a href="#t3"><li class="icon fa fa-comments" id="tres"><span class="hint"> Messages </span></li></a>
+             </ul>
+                
+                <!-- Home Page -->
+                <div class="page" id="p1">
+                   <li class="icon fa fa-home"><span class="title">Home<span class="hint" style="color:red;"> You haven't selected any events</span></span></li>   
+                </div>
   
-
-  <div class="page" id="p2">
-   <div class="container-fluid">
-    <h1> Events </h1>
-  <%=@events.order("date").each_slice(3) do |event_row| %>
-    <div class="row">
-      <% event_row.each do |event| %>
-        <div class="col-md-4 homepage-event-image"> 
-            <a href="events/<%=event.id%>" class="event-link" style="background: url(<%=event.image%>) center no-repeat; background-size: contain;"> </a>   
-        </div>
-      <% end %>
-    </div>
-  <%end%>
-</div>
-  </div>  
+                <!-- Events Page -->
+                <div class="page" id="p2">
+                 <div class="container-fluid">
+                  <h1> Events </h1>
+                    <%=@events.order("date").each_slice(3) do |event_row| %>
+                      <div class="row">
+                        <% event_row.each do |event| %>
+                          <div class="col-md-4 homepage-event-image"> 
+                            <a href="events/<%=event.id%>" class="event-link" style="background: url(<%=event.image%>) center no-repeat; background-size: contain;"> </a>   
+                          </div>
+                        <% end %>
+                      </div>
+                    <%end%>
+                  </div>
+                </div>  
   
-
-  <div class="page" id="p3">
-    <li class="icon fa fa-comments"><span class="title">Hotline Bling</span></li>
-  </div> 
-  <p class="credit"> &copy; Down 2 Go <a href="https://downtogo.com/">Made in Brooklyn</a></p>
-</section>
+                <!-- Messages Page --> 
+                <div class="page" id="p3">
+                  <li class="icon fa fa-comments"><span class="title">Hotline Bling</span></li>
+                </div> 
+                
+                <!-- Footer -->
+                <p class="credit"> &copy; Down 2 Go <a href="https://downtogo.com/">Made in Brooklyn</a></p>
+          </section>
        
-     </div>
-     </div>
-   </div>
+        </div>
+      </div>
+    </div>
   </div>
-
 </body>
 </html>
